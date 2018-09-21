@@ -18,7 +18,7 @@ Ideal Tasks:
   4) Create a way for our website to run selected script on selected device
   5) Create a way to send results from script execution to the database
 
-Other shit that we should probably do (and can upload here):
+Other thing(s) that we should do (and can upload here):
   1) Create a state diagram*
 
 *Creating the diagram should help us stay on track for troubleshooting. I'll probably take care of this within the next few days.
