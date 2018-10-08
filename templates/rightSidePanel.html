@@ -1,0 +1,35 @@
+{% set editButtons %} 
+        <div class="edit-panel">
+        <div class="edit-button add">Add</div>
+        <div class="edit-button remove">Del</div>
+        <div class="edit-button edit">Edit</div>
+        </div>
+    {% endset %}
+
+    {% set dummyList %}
+        <ul class="list-group list-group-flush">
+            
+        </ul>
+    {% endset %}
+
+
+
+<div class="pane side-panel">
+<!-- Edit Buttons: Add, Delete, Edit -->
+
+    <div class="upper-pane">
+    <!-- Upper pane: upper half of the split side-pane-->
+        {{ dummyList }}
+
+    </div>
+
+    {{ editButtons }}
+                
+    <div class="lower-pane">
+    <!-- Lower pane: lower half of the split side-pane-->
+        Lower Div
+
+    </div>
+
+</div>
+
