@@ -3,7 +3,8 @@
     margin: 0;
 }
 
-body, html{
+body,
+html {
     height: 100%;
     width: 100%;
 }
@@ -32,10 +33,9 @@ body, html{
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-
-.side-panel {
+.side-panel.left-panel {
     display: grid;
-    grid-template-rows: 55% 5% 40%;
+    grid-template-rows: 55% 45%;
     height: 100%;
 }
 
@@ -51,21 +51,21 @@ body, html{
     height: 100%;
 }
 
-.upper-pane{
+.left-panel .upper-pane {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    width: 100%;
     height: 100%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
 
-.left-panel .upper-pane{
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    width: 100%;
-}
-
-
-.card:hover{
+.card:hover {
     transform: scale(1.05);
 }
 
+.card-header,
+.card-body {
+    background-color: gray;
+}
