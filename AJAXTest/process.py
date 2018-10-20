@@ -1,23 +1,33 @@
+import subprocess
 from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-	return render_template('form.html')
+    return render_template('form.html')
 
 @app.route('/process', methods=['POST'])
-def process():
+def process(script_path):
+    result = subprocess.Popen(script_path,
+    shell=True,
+    stdin=subprocess.PIPE,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.STDOUT,
+    universal_newlines=True)
 
-	num1 = request.form['num1']
-	num2 = request.form['num2']
+    result_code = request.form['num1']
 
-	if num1 and num2:
-		sum = int(num1) + int(num2)
+    return int(result_code)
 
-		return jsonify({'sum' : sum})
+    test_result = process(r'Comp-410-Project-Fall-2018/AJAXTest/test_script_mock.py')
 
-	return jsonify({'error' : 'Missing data!'})
+# this print is for debug only
+    print(str(test_result))
+
+# return jsonify({'sum' : test_result})
+
+    return jsonify({'Result': test_result})
 
 if __name__ == '__main__':
     app.run()
