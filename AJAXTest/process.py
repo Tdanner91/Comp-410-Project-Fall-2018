@@ -10,11 +10,11 @@ def index():
 @app.route('/process', methods=['POST'])
 def process(script_path):
     result = subprocess.Popen(script_path,
-    shell=True,
-    stdin=subprocess.PIPE,
-    stdout=subprocess.PIPE,
-    stderr=subprocess.STDOUT,
-    universal_newlines=True)
+        shell=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True)
 
     result_code = request.form['num1']
 
