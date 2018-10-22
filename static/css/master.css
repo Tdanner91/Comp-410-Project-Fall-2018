@@ -33,12 +33,6 @@ html {
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-.side-panel.left-panel {
-    display: grid;
-    grid-template-rows: 55% 45%;
-    height: 100%;
-}
-
 .center-panel {
     background-color: blue;
     display: grid;
@@ -59,6 +53,12 @@ html {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+}
+
+.side-panel.left-panel {
+    display: grid;
+    grid-template-rows: 55% 45%;
+    height: 100%;
 }
 
 .card:hover {
