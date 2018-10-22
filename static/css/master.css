@@ -61,6 +61,11 @@ html {
     height: 100%;
 }
 
+.side-panel.right-panel {
+    display: grid;
+    grid-template-rows: 80% 20%;
+}
+
 .card:hover {
     transform: scale(1.05);
 }
