@@ -66,6 +66,10 @@ html {
     grid-template-rows: 80% 20%;
 }
 
+.right-panel .upper-pane {
+    overflow-y: scroll;
+}
+
 .card:hover {
     transform: scale(1.05);
 }
