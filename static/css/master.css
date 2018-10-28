@@ -1,80 +1,73 @@
-* {
-    padding: 0;
+*{
     margin: 0;
+    padding: 0;
 }
 
-body,
-html {
+html, body{
     height: 100%;
     width: 100%;
 }
 
-.main-container {
+.main-container{
     height: 100%;
     width: 100%;
+
     display: grid;
-    grid-template-columns: 28% 44% 28%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+    grid-template-columns: 70% 30%;
 }
 
-.main-container * {
-    border: .5px solid black;
-    height: 100%;
-    width: 100%;
-}
-
-.exec-buttons {
-    height: 100%;
-    width: 100%;
-    background-color: gray;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.center-panel {
+.outer.left-panel{
     background-color: blue;
+
     display: grid;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 70% 30%;
 }
 
-.edit-panel {
+.outer.right-panel{
+    background-color: purple;
+    overflow-y: scroll;
+
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;
+}
+
+.inner.one{
+    background-color: orange;
+    overflow-y: scroll;
+
+    display: grid;
+    place-items: center;
+}
+
+.inner.two{
+    background-color: yellow;
+
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.edit-panel{
+    background-color: red;
+
+    display: grid;
+    grid-template-columns: 15% 85%;
+}
+
+.edit-panel-options{
+    display: grid;
+    place-items: center;
+}
+
+.selection-panel{
+    background-color: green;
     height: 100%;
+    width: 100%;
+
+    display: grid;
+    place-items: center;
 }
 
-.left-panel .upper-pane {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+.btn{
     width: 100%;
     height: 100%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-
-.side-panel.left-panel {
-    display: grid;
-    grid-template-rows: 55% 45%;
-    height: 100%;
-}
-
-.side-panel.right-panel {
-    display: grid;
-    grid-template-rows: 80% 20%;
-}
-
-.right-panel .upper-pane {
-    overflow-y: scroll;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
-.card-header,
-.card-body {
-    background-color: gray;
 }
