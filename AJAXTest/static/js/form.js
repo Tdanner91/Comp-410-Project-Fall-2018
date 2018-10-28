@@ -4,6 +4,7 @@ $(document).ready(function() {
 
         $.ajax({
                 data: {
+                    test_case_js: $('#test-case').val(),
                     test_code_js: $('#test-code').val()
                 },
                 type: 'POST',
