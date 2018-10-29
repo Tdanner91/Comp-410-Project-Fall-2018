@@ -1,9 +1,10 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-html, body{
+html,
+body {
     height: 100%;
     width: 100%;
 }
@@ -11,71 +12,73 @@ html, body{
 .main-container {
     height: 100%;
     width: 100%;
-
     display: grid;
     grid-template-columns: 70% 30%;
 }
 
 .outer.left-panel {
     /* background-color: blue; */
-
+    height: 100%;
     display: grid;
     grid-template-rows: 70% 30%;
 }
 
-.outer.right-panel{
+.outer.right-panel {
+    height: 100%;
     background-color: purple;
     overflow-y: scroll;
-
     /* display: grid;
     place-items: center; */
 }
 
-.inner.one{
+.inner.one {
     background-color: orange;
     overflow-y: scroll;
-
     display: grid;
     place-items: center;
 }
 
-.inner.two{
+.inner.two {
     /* background-color: yellow; */
-
+    height: 100%;
     display: grid;
     grid-template-columns: 30% 70%;
 }
 
-.edit-panel{
+.edit-panel {
     /* background-color: red; */
-
+    height: 100%;
     display: grid;
     grid-template-columns: 15% 85%;
 }
 
-.edit-panel-options{
+.edit-panel-options {
+    height: 100%;
     display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     place-items: center;
 }
 
-.selection-panel{
+.edit-panel-options .btn {
+    max-height: 31px;
+    width: 100%;
+    border: black solid 1px;
+}
+
+.selection-panel {
     /* background-color: green; */
     height: 100%;
     width: 100%;
-
     display: grid;
     place-items: center;
 }
 
-.btn{
+.selection-panel .btn {
     width: 100%;
     height: 100%;
-}
-
-.list-group-item{
-    width: 100%;
-}
-
-*{
     border: black solid 1px;
+}
+
+.list-group-item {
+    width: 100%;
 }
