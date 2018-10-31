@@ -1,32 +1,27 @@
 $(document).ready(function() {
 
     $('.selectionPanelButton').on('click', function(event) {
-        db = "";
+        repoName = ''
         switch ($(this).text().trim()) {
-            case "Devices":
-                db = "DUTdummybase";
+            case 'Devices':
+                db = 'device_repository';
                 break;
-            case "Test Cases":
-                db = "Testdummybase";
-                break;
-            case "Saved Results":
-                db = "Resultsdummybase";
+            case 'Test Cases':
+                db = 'test_case_repository';
                 break;
         }
 
-        // console.log('FROM JS CONTROLLER: db = ' + db);
-
         $.ajax({
                 data: {
-                    database: db
+                    repository: repoName
                 },
                 type: 'POST',
-                url: '/databaseFunctions'
+                url: '/selectionPanelResponse'
             })
             .done(function(data) {
                 $('.right-panel-list').empty();
                 for (let i = 0; i < data.length; i++) {
-                    $(".right-panel-list").append(' <a href="#" class="list-group-item list-group-item-action">' + data[i] + '</a>');
+                    $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action">' + data[i] + '</a>');
                 }
 
             })

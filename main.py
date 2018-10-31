@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from importlib import import_module, invalidate_caches
-import databaseFunctions as dbf
+import repoCrawler as rc
 
 app = Flask(__name__)
 
@@ -23,10 +23,10 @@ def process():
 		
 	return jsonify({'test_code_returned' : test_case.run_test(test_code)})
 
-@app.route('/databaseFunctions', methods=['POST'])
-def databaseFunctions():
-	dbname = request.form['database']
-	data = dbf.retrieveDataPoints(dbname)
+@app.route('/selectionPanelResponse', methods=['POST'])
+def selectionPanelResponse():
+	repoName = request.form['repository']
+	data = rc.folderCrawler(repoName)
 	
 	return jsonify(data)
 
