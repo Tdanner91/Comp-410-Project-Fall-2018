@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from importlib import import_module, invalidate_caches
-import databaseFunctions
+import databaseFunctions as dbf
 
 app = Flask(__name__)
 
@@ -18,7 +18,6 @@ def process():
 	test_case_name = request.form['test_case_js']
 	test_code = request.form['test_code_js']
 	test_case_repository = 'test_case_repository'
-	test_case_run = 'run_test'
 
 	test_case = import_module('{}.{}'.format(test_case_repository, test_case_name))
 		
@@ -26,8 +25,10 @@ def process():
 
 @app.route('/databaseFunctions', methods=['POST'])
 def databaseFunctions():
+	dbname = request.form['database']
+	data = dbf.retrieveDataPoints(dbname)
 	
-	return jsonify({'value': 'it worked'})
+	return jsonify(data)
 
 
 if __name__ == '__main__':

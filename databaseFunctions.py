@@ -8,11 +8,23 @@ def connectToDatabase(dbName):
 
 
 def retrieveDataPoints(dbName):
-    c = connectToDatabase(dbName)
+    c = connectToDatabase(dbName + '.db')
+
+    tableName = dbName[:-9].lower()
+    selectionCriteria = getSelectionCriteria(tableName)
+
     data = []
-    counter = 1
-    tableName = dbName[:-12].lower()
-    for row in c.execute('SELECT device_name FROM ' + tableName):
+
+    for row in c.execute('SELECT ' + selectionCriteria + ' FROM ' + tableName):
         data.append(row)
 
     return [x[0] for x in data]
+
+def getSelectionCriteria(tableName):
+
+    if tableName == 'dut':
+        return 'device_name'
+    elif tableName == 'test':
+        return 'test_name'
+    elif tableName == 'results':
+        return 'result_name'
