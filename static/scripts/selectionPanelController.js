@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
     $('.selectionPanelButton').on('click', function(event) {
-
         db = "";
         switch ($(this).text().trim()) {
             case "Devices":
