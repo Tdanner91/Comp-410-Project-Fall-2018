@@ -1,15 +1,16 @@
 $(document).ready(function() {
 
     $('.selectionPanelButton').on('click', function(event) {
-        repoName = ''
+        repoName = '';
         switch ($(this).text().trim()) {
             case 'Devices':
-                db = 'device_repository';
+                repoName = 'device_repository';
                 break;
             case 'Test Cases':
-                db = 'test_case_repository';
+                repoName = 'test_case_repository';
                 break;
         }
+
 
         $.ajax({
                 data: {
@@ -20,11 +21,12 @@ $(document).ready(function() {
             })
             .done(function(data) {
                 $('.right-panel-list').empty();
-                for (let i = 0; i < data.length; i++) {
+
+                for (var i = 0; i < data.length; i++) {
                     $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action">' + data[i] + '</a>');
                 }
 
-            })
+            });
 
         event.preventDefault();
 
