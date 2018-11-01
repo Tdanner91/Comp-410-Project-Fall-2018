@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from importlib import import_module, invalidate_caches
+from importlib import import_module
 import repoCrawler as rc
 
 app = Flask(__name__)
