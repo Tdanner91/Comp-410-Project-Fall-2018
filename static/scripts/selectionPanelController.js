@@ -1,38 +1,248 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
-    $('.selectionPanelButton').on('click', function(event) {
-        db = "";
-        switch ($(this).text().trim()) {
-            case "Devices":
-                db = "DUTdummybase";
-                break;
-            case "Test Cases":
-                db = "Testdummybase";
-                break;
-            case "Saved Results":
-                db = "Resultsdummybase";
-                break;
-        }
+    function clearRightPanelList() {
+        $('.right-panel-list').empty();
+    }
 
-        // console.log('FROM JS CONTROLLER: db = ' + db);
+    function clearEditPanelOptionsPanel() {
+        $('.editPanelOptions').empty();
+    }
 
-        $.ajax({
+    function addTestCaseEditPanelOptions() {
+        $('.editPanelOptions').append('<button type="button" class="btn btn-outline-dark editPanelOptionButton">Add Script to Repo</button>');
+        $('.editPanelOptions').append('<button type="button" class="btn btn-outline-dark editPanelOptionButton">Remove Script From Repo</button>');
+        $('.editPanelOptions').append('<button type="button" class="btn btn-outline-dark editPanelOptionButton">Remove Script From Execution Queue</button>');
+        $('.editPanelOptions').append('<button type="button" class="btn btn-outline-dark editPanelOptionButton">Run Selected Scripts</button>');
+        attachEditPanelViewControllers();
+    }
+
+    function RemoveScriptFromRepo() {
+
+    }
+
+    function RemoteScriptFromQueue() {
+
+    }
+
+    function RunSelectedScripts() {
+
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Button action controllers/ AJAX requests occur here
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    function attachDeviceButtonController() {
+        $('.device-button').on('click', function (event) {
+            $.ajax({
                 data: {
-                    database: db
+                    repository: 'device_repository'
                 },
                 type: 'POST',
-                url: '/databaseFunctions'
+                url: '/selectionPanelResponse'
             })
-            .done(function(data) {
-                $('.right-panel-list').empty();
-                for (let i = 0; i < data.length; i++) {
-                    $(".right-panel-list").append(' <a href="#" class="list-group-item list-group-item-action">' + data[i] + '</a>');
-                }
+                .done(function (data) {
 
+                    clearRightPanelList();
+                    clearEditPanelOptionsPanel();
+                    // addDeviceEditPanelOptions();
+
+                    for (var i = 0; i < data.length; i++) {
+                        $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action">' + data[i] + '</a>');
+                    }
+                });
+            event.preventDefault();
+        });
+
+    }
+
+    function attachTestCaseButtonController() {
+        $('.test-case-button').on('click', function (event) {
+            $.ajax({
+                data: {
+                    repository: 'test_case_repository'
+                },
+                type: 'POST',
+                url: '/selectionPanelResponse'
             })
+                .done(function (data) {
 
-        event.preventDefault();
+                    clearRightPanelList();
+                    clearEditPanelOptionsPanel();
+                    addTestCaseEditPanelOptions();
+                    refreshControllers();
+                    for (var i = 0; i < data.length; i++) {
+                        $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action testCaseListItem">' + data[i] + '</a>');
+                    }
+                });
 
-    });
+            event.preventDefault();
+        })
 
+    }
+
+    function attachSavedResultsButtonController() {
+
+        $('.saved-results-button').on('click', function (event) {
+            clearRightPanelList();
+            clearEditPanelOptionsPanel();
+            window.alert('not implemented');
+        })
+    }
+
+    function attachEditPanelViewControllers() {
+        $('.editPanelOptionButton').on('click', function (event) {
+            switch ($(this).text().trim()) {
+                case 'Add Script to Repo':
+                    $('.editPanelView').empty();
+                    exitRemoveScriptMode();
+                    AddEditPanelOptions();
+                    AddScriptToRepo();
+                    break;
+                case 'Remove Script From Repo':
+                    $('.editPanelView').empty();
+                    exitRemoveScriptMode();
+                    RemoveScriptFromRepo();
+                    break;
+                case 'Remove Script From Execution Queue':
+                    $('.editPanelView').empty();
+                    exitRemoveScriptMode();
+                    break;
+                case 'Run Selected Scripts':
+                    $('.editPanelView').empty();
+                    exitRemoveScriptMode();
+                    RunSelectedScripts();
+                    break;
+            }
+        });
+    }
+
+    function AddEditPanelOptions() {
+        $('.editPanelView').append('<div class="form-group"><label for="scriptName"></label><input type="text" class="form-control add-input" id="scriptName" placeholder="Script Name"></div>');
+        $('.editPanelView').append('<form><div class="form-group add-file"><label for="scriptSelection"></label><input type="file" class="form-control-file" id="scriptSelection"></div></form>');
+        $('.editPanelView').append('<input class="btn btn-dark add-submit" type="submit" value="Submit">');
+    }
+
+    function AddScriptToRepo() {
+
+        function loadSubmitController(script, scriptname) {
+
+            $('.add-submit').on('click', function (event) {
+                let scriptName = $('#scriptName').val().trim();
+                let scriptLocation = $('#scriptSelection').val().trim();
+
+                $.ajax({
+                    data: {
+                        _script: script,
+                        _scriptName: scriptName
+                    },
+                    type: 'POST',
+                    url: '/userGeneratedScriptUploading'
+                })
+                    .done(function (data) {
+                        $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action">' + data.name + '</a>');
+
+                    });
+            });
+        }
+
+        $('#scriptSelection').on('change', function (event) {
+            let file = event.target.files;
+            let reader = new FileReader();
+
+            reader.onload = function (event) {
+                let script = event.target.result;
+                let scriptName = $('#scriptSelection').val().trim();
+
+                loadSubmitController(script, scriptName);
+
+            }
+            reader.readAsText(file[0]);
+
+        });
+    }
+
+    let selectionArray = [];
+    function exitRemoveScriptMode() {
+        selectionArray = [];
+        $('.right-panel-list *').each(function () {
+            if ($(this).hasClass('selectedListItem')) 
+            {
+                $(this).removeClass('selectedListItem');
+            }
+        });
+    }
+
+    function RemoveScriptFromRepo() {
+        // window.alert('please select the script(s) for removal');
+        $('.editPanelView').append('<div class="form-group"><label for="DeleteList">Scripts for Deletion</label><select multiple class="form-control deleteList" id="DeleteList"></select><br /><button type="submit" class="btn btn-dark deleteButton">Delete</button></div>');
+        
+        deleteButtonController();
+
+        $('.testCaseListItem').on('click', function (event) {
+            if ($(this).hasClass('selectedListItem')) {
+                $(this).removeClass('selectedListItem');
+                index = selectionArray.indexOf($(this).text().trim());
+                selectionArray.splice(index, 1);
+            } else {
+                $(this).addClass('selectedListItem');
+                selectionArray.push($(this).text().trim());
+            }
+
+            $('.deleteList').empty();
+
+            for (let i = 0; i < selectionArray.length; i++) {
+                $('.deleteList').append('<option>' + selectionArray[i] + '</option>');
+            }
+
+        });
+
+    }
+
+    function deleteButtonController() {
+        $('.deleteButton').on('click', function (event) {
+            dataSend = JSON.stringify(selectionArray);
+
+            $.ajax({
+                data: {
+                    scriptslist: dataSend
+                },
+                type: 'POST',
+                url: '/removeScriptsFromRepo'
+            })
+                .done(function (data) {
+                    window.alert('Scripts Deleted.');
+                    $('.deleteList').empty();
+                    
+                    $('.right-panel-list *').each(function () {
+                        if ($(this).hasClass('selectedListItem')) {
+                           $(this).remove();
+                        }
+                    });
+                });
+        });
+    }
+
+    function RemoveScriptFromQueue() {
+
+    }
+
+    function RunSelectedScripts() {
+        $('.editPanelView').append('<div class="form-group"><label for="ExecuteList">Scripts for Execution Queue</label><select multiple class="form-control executeList" id="ExecuteList"></select><br /><button type="submit" class="btn btn-dark executeList">Delete</button></div>');
+        
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function addControllers() {
+        attachDeviceButtonController();
+        attachTestCaseButtonController();
+        attachSavedResultsButtonController();
+    }
+
+    function refreshControllers() {
+        attachDeviceButtonController();
+        attachTestCaseButtonController();
+    }
+
+    addControllers();
 });
