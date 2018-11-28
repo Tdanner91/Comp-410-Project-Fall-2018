@@ -26,8 +26,9 @@ $(document).ready(function() {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //Button action controllers/ AJAX requests occur here
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    function attachDeviceButtonController() {
+    addControllers();
 
+    function attachDeviceButtonController() {
         $('.device-button').on('click', function(event) {
             $.ajax({
                     data: {
@@ -65,7 +66,7 @@ $(document).ready(function() {
                     clearRightPanelList();
                     clearEditPanelOptionsPanel();
                     addTestCaseEditPanelOptions();
-                    refreshControllers();
+                    // refreshControllers();
                     for (var i = 0; i < data.length; i++) {
                         $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action testCaseListItem">' + data[i] + '</a>');
                     }
@@ -279,11 +280,4 @@ $(document).ready(function() {
         attachTestCaseButtonController();
         attachSavedResultsButtonController();
     }
-
-    function refreshControllers() {
-        attachDeviceButtonController();
-        attachTestCaseButtonController();
-    }
-
-    addControllers();
 });
