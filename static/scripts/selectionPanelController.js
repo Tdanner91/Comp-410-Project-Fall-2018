@@ -66,7 +66,7 @@ $(document).ready(function() {
                     clearRightPanelList();
                     clearEditPanelOptionsPanel();
                     addTestCaseEditPanelOptions();
-                    // refreshControllers();
+
                     for (var i = 0; i < data.length; i++) {
                         $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action testCaseListItem">' + data[i] + '</a>');
                     }
@@ -81,6 +81,7 @@ $(document).ready(function() {
 
         $('.saved-results-button').on('click', function(event) {
             clearEditPanelOptionsPanel();
+            $('.editPanelView').empty();
             $.ajax({
                     data: {
 
@@ -163,7 +164,7 @@ $(document).ready(function() {
                         url: '/userGeneratedScriptUploading'
                     })
                     .done(function(data) {
-                        $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action">' + data.name + '</a>');
+                        $('.right-panel-list').append('<a href="#" class="list-group-item list-group-item-action">' + data.name + '</a>');
 
                     });
             });
@@ -199,11 +200,8 @@ $(document).ready(function() {
     function RemoveScriptFromRepo() {
         // window.alert('please select the script(s) for removal');
         $('.editPanelView').append('<div class="form-group"><label for="DeleteList">Scripts for Deletion</label><select multiple class="form-control deleteList" id="DeleteList"></select><br /><button type="submit" class="btn btn-dark deleteButton">Delete</button></div>');
-
         deleteButtonController();
-
         listUpdater('deleteList');
-
     }
 
     function listUpdater(list) {
