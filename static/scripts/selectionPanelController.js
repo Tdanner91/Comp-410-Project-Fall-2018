@@ -16,10 +16,18 @@ $(document).ready(function() {
         attachEditPanelViewControllers();
     }
 
+    function addDeviceEditPanelOptions() {
+        $('.editPanelOptions').append('<button type="button" class="btn btn-outline-dark editPanelOptionButton">Add Device to Repo</button>');
+        $('.editPanelOptions').append('<button type="button" class="btn btn-outline-dark editPanelOptionButton">Remove Device From Repo</button>');
+        $('.editPanelOptions').append('<button type="button" class="btn btn-outline-dark editPanelOptionButton">Attach Devices to Tests</button>');
+        attachEditPanelViewControllers();
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //Button action controllers/ AJAX requests occur here
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     function attachDeviceButtonController() {
+
         $('.device-button').on('click', function(event) {
             $.ajax({
                     data: {
@@ -32,7 +40,7 @@ $(document).ready(function() {
 
                     clearRightPanelList();
                     clearEditPanelOptionsPanel();
-                    // addDeviceEditPanelOptions();
+                    addDeviceEditPanelOptions();
 
                     for (var i = 0; i < data.length; i++) {
                         $('.right-panel-list').append(' <a href="#" class="list-group-item list-group-item-action">' + data[i] + '</a>');
@@ -71,10 +79,24 @@ $(document).ready(function() {
     function attachSavedResultsButtonController() {
 
         $('.saved-results-button').on('click', function(event) {
-            clearRightPanelList();
             clearEditPanelOptionsPanel();
-            window.alert('not implemented');
-        })
+            $.ajax({
+                    data: {
+
+                    },
+                    type: 'POST',
+                    url: '/updateDatabase'
+                })
+                .done(function(data) {
+                    $('.results-table tbody').empty();
+
+                    for (let i = 0; i < data.database.length; i++) {
+                        $('.results-table tbody').append('<tr><td>' + data.database[i][0] + '</td><td>' + data.database[i][1] + '</td><td>' + data.database[i][2] + '</td><td></td></tr>');
+                    }
+
+
+                });
+        });
     }
 
     function attachEditPanelViewControllers() {

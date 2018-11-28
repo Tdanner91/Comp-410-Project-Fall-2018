@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from importlib import import_module
 from __selectionPanelToolBox import loadDeviceList as ldl
 from __selectionPanelToolBox import loadTestCaseNames as ltcn
-import os, json, queue, threading, time, datetime
+import os, json, queue, threading, time, datetime, sqlite3
 from multiprocessing import Process, Queue
 import subprocess
 
@@ -53,6 +53,19 @@ def removeScriptsFromRepo():
 	
 	return jsonify({'ret' : scriptsList})
 
+@app.route('/updateDatabase', methods=['POST'])
+def updateDatabase():
+	data = []
+
+	conn = sqlite3.connect('SavedResults.db')
+	c = conn.cursor()
+
+	for row in c.execute('SELECT * FROM results'):
+    		data.append(row)
+	
+	print(data)
+
+	return jsonify({'database': data})
 
 ############################Execution Queue############################
 execQ = Queue()
@@ -76,8 +89,14 @@ def executioner():
 		if execQ.empty():
 			pass
 		else:
-			test_date_time = datetime.datetime.now()
+			conn = sqlite3.connect('SavedResults.db')
+			c = conn.cursor()
+			
+			dt = datetime.datetime.now()
+			test_date_time = '{:%a %m/%d/%y %H:%M %p}'.format(dt)
 			testName = execQ.get()
+			results_name = ''
+			
 			try:
 				pass_fail = 'pass'
 				os.system('python __test_case_repository/' + testName)
@@ -85,8 +104,13 @@ def executioner():
 			except:
 				pass_fail = 'fail'
 				print('ERROR!!!')
-	
-	
+			
+			c.execute('INSERT INTO results (date_time, test_name, pass_fail, results_name) VALUES (?, ?, ?, ?)', (test_date_time, testName, pass_fail, results_name))
+			
+			conn.commit()
+			c.close()
+			conn.close()
+			print('database updated')
 
 if __name__ == '__main__':
 	t = threading.Thread(target=executioner)

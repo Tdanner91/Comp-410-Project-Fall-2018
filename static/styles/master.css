@@ -31,13 +31,6 @@ body {
     place-items: center; */
 }
 
-.inner.one {
-    background-color: orange;
-    overflow-y: scroll;
-    display: grid;
-    place-items: center;
-}
-
 .inner.two {
     /* background-color: yellow; */
     height: 100%;
@@ -80,21 +73,33 @@ body {
     width: 100%;
 }
 
-.editPanelView{
+.editPanelView {
     /* background-color: blue; */
     /* word-wrap: break-word; */
 }
 
-a 
-{
+a {
     background-color: transparent !important;
 }
 
-.selectedListItem{
+.selectedListItem {
     background-color: red !important;
 }
 
+.inner.one {
+    border: 1pt black solid;
+}
 
+.results-table {
+    width: 100%;
+    overflow-y: scroll;
+    border: 1pt black solid;
+}
 
+th {
+    border: 1pt black solid;
+}
 
-
+td {
+    border: 1pt black solid;
+}
