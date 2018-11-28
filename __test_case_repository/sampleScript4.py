@@ -94,10 +94,10 @@ else:
     exit(1)
 
 status,output = connect_csr1000v(params,retries=5)
+outputFile = open('__test_case_repository/__test_results/sampleScript4.txt', 'w')
 if status:
-    print('\nTraffic test Passed...\n\nThe RX/TX counters for interfaces got updated...\n\n{}'.format(output))
+    outputFile.write('\nTraffic test Passed...\n\nThe RX/TX counters for interfaces got updated...\n\n{}'.format(output))
 else:
-    print('\nTraffic test failed...{}'.format(output))
+    outputFile.write('\nTraffic test failed...{}'.format(output))
 
-print('\nTest Done !!!')
-exit(0)
+outputFile.close()
