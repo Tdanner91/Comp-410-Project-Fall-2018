@@ -46,7 +46,6 @@ def userGeneratedScriptUploading():
 @app.route('/removeScriptsFromRepo', methods=['POST'])
 def removeScriptsFromRepo():
 	scriptsList = json.loads(request.form['scriptslist'])
-	print(scriptsList)
 	for i in range(len(scriptsList)):
 		os.remove("__test_case_repository/" + scriptsList[i])
 
@@ -62,8 +61,6 @@ def updateDatabase():
 
 	for row in c.execute('SELECT * FROM results'):
     		data.append(row)
-	
-	print(data)
 
 	return jsonify({'database': data})
 
@@ -73,7 +70,6 @@ execList = []
 @app.route('/executeScripts', methods=['POST'])
 def executeScripts():
 	scriptsList = json.loads(request.form['scriptslist'])
-	# print(scriptsList)
 	for script in scriptsList:
 		execQ.put(script)
 		execList.append(script)
